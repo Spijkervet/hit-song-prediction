@@ -49,8 +49,10 @@ def feature_importance(clf, features):
         yerr=std[indices],
         align="center",
     )
-    plt.xticks(range(X.shape[1]), indices)
+    
+    plt.xticks(range(X.shape[1]), [features[i] for i in indices], rotation=90)
     plt.xlim([-1, X.shape[1]])
+    plt.tight_layout()
     plt.show()
 
 

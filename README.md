@@ -14,6 +14,15 @@ Logistic Regression | 0.819 | 0.783 | 0.880 | 0.832 | 0.877
 Random Forest | 0.813 | 0.772 | 0.887 | 0.839 | 0.879
 Neural network (MLP) | 0.818 | 0.784 | 0.876 | 0.834 | 0.877
 
+
+<div align="center">
+  <img width="50%" alt="CLMR model" src="https://github.com/Spijkervet/hit-song-prediction/blob/master/media/feature_importances.png?raw=true">
+</div>
+<div align="center">
+  Feature importances extracted from Random Forest model
+</div>
+
+
 ## Data collection
 Two datasets are required to train: a "hit" and "non-hit" song dataset. The hit songs are scraped from the Billboard Hot 100 charts. Subsequently, the corresponding Spotify track is matched against the Billboard songs, and lastly their audio features are computed. While all files are already compiled in the `./datasets` folder, the following commands perform these operations:
 
