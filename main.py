@@ -14,7 +14,8 @@ from sklearn.metrics import (
 from sklearn.preprocessing import MinMaxScaler
 
 import matplotlib.pyplot as plt
-
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 def hit_non_hit(score):
     return 1
@@ -76,7 +77,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--holdout_year", help="Which year's hit songs to withold for testing"
     )
+    parser.add_argument(
+        "--test_song", help="Spotify URI to test hit song potential"
+    )
     args = parser.parse_args()
+
+
+    ## Spotipy
+    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
     ## load hit/non-hit datasets
     hits = pd.read_csv(args.hits)
@@ -134,7 +142,7 @@ if __name__ == "__main__":
     if args.classifier == "logistic_regression":
         clf = LogisticRegression(random_state=args.seed, max_iter=1000)
     elif args.classifier == "random_forest":
-        clf = RandomForestClassifier(random_state=args.seed, max_depth=2)
+        clf = RandomForestClassifier(random_state=args.seed, max_depth=6)
     elif args.classifier == "neural_network":
         clf = MLPClassifier(
             random_state=args.seed,
@@ -185,3 +193,10 @@ if __name__ == "__main__":
         print("(Test) Average precision (AP)", average_precision)
 
         # print("(Test) ROC-AUC", roc_auc)
+    
+    if args.test_song:
+        track_id = args.test_song.split(":")[2]
+        song_df = pd.DataFrame.from_records(sp.audio_features(track_id)[0], index=[0])
+        X = song_df[features].values
+        y_pred = clf.predict(X)
+        print(y_pred)
