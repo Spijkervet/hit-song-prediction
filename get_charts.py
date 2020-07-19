@@ -20,6 +20,7 @@ if __name__ == "__main__":
     if os.path.exists("billboard.csv"):
         df = pd.read_csv("billboard.csv")
         start_date = (datetime.strptime(df["date"].min(), "%Y-%m-%d") - timedelta(days=7)).date()
+        print("Found existing billboard.csv, starting at date:", start_date)
     else:
         df = pd.DataFrame(data=[], columns=["title", "artist", "peakPos", "lastPos", "weeks", "rank", "isNew", "date"])
         df.to_csv("billboard.csv")

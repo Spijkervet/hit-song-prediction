@@ -11,14 +11,21 @@ def remove_bracketed_text(text):
 
 if __name__ == "__main__":
 
+    # read charts / songs file
     df = pd.read_csv("billboard.csv")
     df["SongID"] = df["title"] + df["artist"]
+
+    # remove duplicates
     df = df.drop_duplicates(subset="SongID", keep="first")
 
+    # create empty dataframes for Spotify / unmatched songs
     spotify_df = pd.DataFrame(columns=[])
     unmatched_df = pd.DataFrame(columns=[])
     for idx, row in tqdm(df.iterrows(), total=len(df)):
         matched = False
+
+        # search for a track using the track title.
+        # subsequently compare the artist(s) of the track and its title using Levenshtein distance
         sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
         results = sp.search(row.title, type="track")
         for r in results["tracks"]["items"]:
@@ -44,6 +51,7 @@ if __name__ == "__main__":
                 }
                 spotify_df = spotify_df.append(d, ignore_index=True)
                 matched = True
+                break
         
         if not matched:
             unmatched_df = unmatched_df.append(row)
