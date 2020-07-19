@@ -13,7 +13,7 @@ def remove_bracketed_text(text):
 if __name__ == "__main__":
 
     # read charts / songs file
-    df = pd.read_csv("billboard.csv")
+    df = pd.read_csv("datasets/billboard.csv")
     df = df.drop(
         [c for c in df.columns if "0.1" in c], axis=1
     )  # remove some Unnamed cols
@@ -77,5 +77,5 @@ if __name__ == "__main__":
         pass
 
     print("Unmatched tracks:", len(unmatched_df))
-    spotify_df.to_csv("spotify_billboard.csv")
-    unmatched_df.to_csv("unmatched_spotify_billboard.csv")
+    spotify_df.to_csv("datasets/spotify_billboard.csv")
+    unmatched_df.to_csv("datasets/unmatched_spotify_billboard.csv")

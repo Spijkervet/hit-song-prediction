@@ -17,13 +17,13 @@ def get_charts(date):
 if __name__ == "__main__":
     start_date = None
 
-    if os.path.exists("billboard.csv"):
-        df = pd.read_csv("billboard.csv")
+    if os.path.exists("datasets/billboard.csv"):
+        df = pd.read_csv("datasets/billboard.csv")
         start_date = (datetime.strptime(df["date"].min(), "%Y-%m-%d") - timedelta(days=7)).date()
         print("Found existing billboard.csv, starting at date:", start_date)
     else:
         df = pd.DataFrame(data=[], columns=["title", "artist", "peakPos", "lastPos", "weeks", "rank", "isNew", "date"])
-        df.to_csv("billboard.csv")
+        df.to_csv("datasets/billboard.csv")
     
     try:
         for idx, song in enumerate(get_charts(start_date)):
@@ -33,5 +33,5 @@ if __name__ == "__main__":
         pass
     
     print("Saving to billboard.csv")
-    df.to_csv("billboard.csv")
+    df.to_csv("datasets/billboard.csv")
 

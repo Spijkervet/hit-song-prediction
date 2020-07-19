@@ -6,7 +6,7 @@ from tqdm import tqdm
 if __name__ == "__main__":
     TRACKS_PER_REQUEST = 50  # Spotify yields up to 50 audio features per request
 
-    df = pd.read_csv("spotify_billboard.csv")
+    df = pd.read_csv("datasets/spotify_billboard.csv")
     sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
     track_ids = df["id"]
@@ -29,4 +29,4 @@ if __name__ == "__main__":
         print(e)
         pass
 
-    spotify_features_df.to_csv("spotify_billboard_features.csv", index=False)
+    spotify_features_df.to_csv("datasets/spotify_billboard_features.csv", index=False)

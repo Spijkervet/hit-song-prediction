@@ -23,9 +23,9 @@ def hit_non_hit(score):
 if __name__ == "__main__":
     seed = 42
 
-    df = pd.read_csv("spotify_billboard_features.csv")
+    df = pd.read_csv("datasets/spotify_billboard_features.csv")
 
-    non_hits = pd.read_csv("complete_project_data.csv")
+    non_hits = pd.read_csv("datasets/complete_project_data.csv")
     non_hits.columns = [c.lower() for c in non_hits.columns]
     non_hits = non_hits[non_hits["label"] == 0]
 
