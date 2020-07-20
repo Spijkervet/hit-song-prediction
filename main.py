@@ -14,6 +14,7 @@ from sklearn.metrics import (
 from sklearn.preprocessing import MinMaxScaler
 
 import matplotlib.pyplot as plt
+
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -86,7 +87,12 @@ if __name__ == "__main__":
 
 
     ## Spotipy
-    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
+    try:
+        sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
+    except Exception as e:
+        print(e)
+        sp = None
+        pass
 
     ## load hit/non-hit datasets
     hits = pd.read_csv(args.hits)
@@ -196,7 +202,7 @@ if __name__ == "__main__":
 
         # print("(Test) ROC-AUC", roc_auc)
     
-    if args.test_song:
+    if sp and args.test_song:
         track_id = args.test_song.split(":")[2]
         song_df = pd.DataFrame.from_records(sp.audio_features(track_id)[0], index=[0])
         X = song_df[features].values
